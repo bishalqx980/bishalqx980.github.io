@@ -54,8 +54,8 @@
             position: absolute;
             left: 10%;
             right: 10%;
-            background-color: rgb(240, 240, 240, 0.8);
-            animation: slide 2s;
+            background-color: rgb(240, 240, 240);
+            animation: slide 1800ms;
         }
         @keyframes slide {
             from {
@@ -66,7 +66,7 @@
             }
         }
         .slide_out {
-            animation: slide_out 2s;
+            animation: slide_out 1800ms;
         }
         @keyframes slide_out {
             from {
@@ -165,7 +165,7 @@
             content.className = "virtual_div slide_out";
             setTimeout(() => {
                 content.style.display = "none";
-            }, 2000);
+            }, 1800);
         }
         function sys_info() {
             document.getElementById("sys_info").innerHTML = navigator.userAgent;
@@ -179,7 +179,7 @@
     </div><br><br>
     <div id="virtual_div" style="display: none;">
         <button class="btn X" onclick="close_vd_ps3()">X</button>
-        <h1>PS0x03</h1>
+        <h1>PlayStation 3</h1>
         <p>Supported Firmware: 4.84 to 4.89</p>
         <hr><br>
         <a href="https://bishalqx980.github.io/PS3/hen_installer/index.html"><button class="btn" title="Main HEN Installer">Hen Installer</button></a>
