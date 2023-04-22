@@ -4,7 +4,7 @@
 
 ### PS3 & PS4 Jailbreak HOST
 ``
-- PS4 Jailbreak - https://bishalqc.github.io/
+- https://bishalqc.github.io/
 
 ### Other
 ``
