@@ -19,7 +19,7 @@ body {
 .btn {
     width: 20%;
     max-width: 100px;
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(255, 255, 255);
     color: rgb(0, 150, 220);
     text-align: center;
     padding: 10px;
