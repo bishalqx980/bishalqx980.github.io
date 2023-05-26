@@ -43,19 +43,32 @@ a {
 hr {
     opacity: 50%;
 }
-.div0 {
-    display: flex;
-}
-.img_div {
-    flex: 300px;
-}
-.text_div {
-    margin-left: 5px;
-    flex: 100%;
-}
 .img {
     width: 200px;
     border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0px 0px 10px rgb(0, 150, 220);
+}
+.btn0 {
+    position: absolute;
+    margin: auto;
+    width: 200px;
+    background-color: rgb(0, 150, 255);
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    padding: 5px;
+    border: solid 2px rgb(255, 255, 255);
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+    transition: 300ms;
+}
+.btn0:hover {
+    box-shadow: 0px 0px 10px rgb(0, 150, 255);
+    border-radius: 100px;
 }
 .vd {
     width: 80%;
