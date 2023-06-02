@@ -8,6 +8,77 @@
     <link rel="stylesheet" href="core.css">
     <script src="core.js"></script>
     <title>Home - Main page</title>
+    <style>
+        body {
+            background-color: rgb(255, 255, 255);
+            color: rgb(0, 0, 0);
+            font-family: sans-serif;
+            font-size: 18px;
+            width: 80%;
+            max-width: 1080px;
+            margin: auto;
+        }
+        .heading {
+            width: 100%;
+            background-color: rgb(255, 255, 255);
+            box-shadow: 0px 0px 2px rgb(0, 0, 0);
+            border: none;
+            border-radius: 2px;
+            margin-top: 10px;
+            overflow: auto;
+        }
+        .btn {
+            width: 20%;
+            max-width: 100px;
+            background-color: rgb(255, 255, 255);
+            color: rgb(0, 150, 220);
+            text-align: center;
+            font-size: 18px;
+            padding: 10px;
+            float: right;
+            margin-left: 2px;
+            margin-right: 2px;
+            border: none;
+            cursor: pointer;
+            transition: 300ms;
+        }
+        .btn:hover {
+            color: rgb(255, 0, 0);
+        }
+        a {
+            text-decoration: none;
+            color: rgb(0, 150, 220);
+            font-weight: bold;
+        }
+        a:hover {
+            color: rgb(255, 0, 0);
+            text-decoration: underline;
+        }
+        .title {
+            color: rgb(0, 150, 220);
+        }
+        hr {
+            opacity: 50%;
+        }
+        .credit {
+            bottom: 0;
+            position: absolute;
+            width: 80%;
+            margin: auto;
+            font-size: 14px;
+            text-align: center;
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+    <script>
+        function load() {
+            var main = new Date();
+            var year = main.getFullYear();
+            document.getElementById("year").innerHTML = year;
+        }
+    </script>
 </head>
 <body onload="load()">
     <div class="heading">
@@ -17,30 +88,13 @@
     </div>
     <a href="https://bishalqx980.github.io/bishalqx980"><h1 class="title">@bishalqx980</h1></a>
     <hr>
-    <img class="img" src="https://bishalqx980.github.io/bishalqx980/images/img.jpg" alt="">
+    <li><a href="https://bishalqc.github.io">PS3/PS4 Jailbreak HOST</a></li>
+    <li><a href="https://bishalqx980.github.io/telegram-bot-playground/">telegram-bot-playground v2.3</a></li>
+    <li><a href="https://github.com/bishalqx980">Github</a></li>
+    <li><a href="https://github.com/bishalqc">Organization</a></li>
     <br>
-    <a href="https://bishalqx980.github.io/bishalqx980/card/"><button class="btn0">CARD</button></a>
-    <br><br>
-<pre>
-About me :)
-├───Gamer
-├───Cat lover
-├───Sometime Web Developer
-│   ├───Hobby
-│   └───Not Professional
-└───I do whatever I like to do!
-</pre>
-    <br>
-    <div class="vd" style="display: none;" id="vd">
-        <button class="x" id="x" onclick="x()">X</button>
-        <h1 class="title">Projects</h1>
-        <a href="https://bishalqc.github.io"><button class="btn2">PS3/PS4 Jailbreak HOST</button></a>
-        <a href="https://bishalqx980.github.io/Telegram_MessageSender/"><button class="btn2">Telegram Message Sender 2.3</button></a>
-        <a href="https://github.com/bishalqx980"><button class="btn2">Github</button></a>
-        <a href="https://github.com/bishalqc"><button class="btn2">Organization</button></a>
-    </div>
     <div class="credit" id="credit">
-        <p>Coder: <a href="https://bishalqx980.github.io/bishalqx980">@bishalqx980</a> // Copyright: <span id="year"></span></p>
+        <p><b><u>Coder</u>: <a href="https://bishalqx980.github.io/bishalqx980">@bishalqx980</a> || <u>Copyright</u>: <span id="year"></span></b></p>
     </div>
 </body>
 </html>
