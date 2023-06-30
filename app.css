@@ -1,0 +1,70 @@
+
+body {
+    width: 90%;
+    margin: auto;
+    padding: 10px;
+    background-color: rgb(32, 33, 36);
+    color: coral;
+    font-family: sans-serif;
+}
+.head {
+    width: 100%;
+    background-color: rgb(53, 54, 58);
+    border-radius: 100px;
+    padding: 10px;
+    box-shadow: 5px 5px 5px rgb(0, 0, 0);
+    overflow: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.a_special {
+    color: coral;
+    text-decoration: none;
+}
+.a_special:hover {
+    text-decoration: underline;
+}
+a {
+    color: rgb(0, 120, 255);
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+.inner_head {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.logo {
+    height: 64px;
+    width: 64px;
+    border: solid 2px;
+    border-radius: 100px;
+}
+.main {
+    display: flex;
+    justify-content: space-between;
+}
+.article {
+    height: fit-content;
+    background-color: rgb(20, 15, 20);
+    border: solid 2px rgb(53, 54, 58);
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 5px 5px 5px rgb(0, 0, 0);
+}
+hr {
+    opacity: 25%;
+}
+.tele_div {
+    width: 25%;
+}
+::-webkit-scrollbar {
+    background-color: rgb(53, 54, 58);
+    width: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: coral;
+}
