@@ -44,6 +44,7 @@ a:hover {
     border-radius: 100px;
 }
 .main {
+    width: 90%;
     display: flex;
     justify-content: space-between;
 }
