@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zeroURLShortener ⚡</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            font-size: 18px;
+        }
+        a {
+            color: rgb(0, 200, 255);
+            text-decoration: none;
+        }
+        #geturl {
+            width: 200px;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgb(0, 0, 0, 0.5);
+            outline-color: rgb(0, 200, 255);
+        }
+        .btn {
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgb(0, 0, 0, 0.5);
+            cursor: pointer;
+        }
+        .btn:hover {
+            box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1><a href="https://t.me/zeroURLShortenerBot">› zeroURLShortener ⚡</a></h1>
+    <p>📕<i>Paste your URL on that URL box then click the "GO" button...</i></p>
+    <p><span id="res">~</span> <button onclick="copyRes()" id="copybtn" style="display: none;" class="btn">Copy 📃</button></p>
+    <br>
+    <input type="url" name="" id="geturl" placeholder="URL">
+    <button onclick="go()" class="btn">Go</button>
+    <br><br>
+    <p><b>💻 Developed by <a href="https://bishalqx980.github.io/bishalqx980">@bishalqx980</a></b></p>
+    <script>
+        function go() {
+            let check = document.getElementById("geturl").value;
+            if (check != "") {
+                proceed();
+            }else {
+                alert("❌ URL box can't leave empty...!!");
+            }
+        }
+        function proceed() {
+            let api_key = "d8e99e07526a08c6c137ed0ddd99911266ca8950"
+            let url = document.getElementById("geturl").value;
+            let mod_url = "https://shrinkme.io/api?api="+ api_key +"&url="+ url +"&format=text"
+
+            let api = new XMLHttpRequest();
+            api.open("GET", mod_url, true);
+            api.send();
+            api.onload = function() {
+                let result = api.response;
+                let res = document.getElementById("res");
+                if (result == "") {
+                    res.innerHTML = "⚠️ Invalid URL !!";
+                    document.getElementById("copybtn").style.display = "none";
+                }else {
+                    res.innerHTML = result;
+                    localStorage.setItem("URL", result);
+                    document.getElementById("copybtn").style.display = "";
+                }
+            }
+        }
+        function copyRes() {
+            let copyContent = localStorage.getItem("URL");
+            navigator.clipboard.writeText(copyContent);
+            document.getElementById("copybtn").innerHTML = "Copied ✅";
+            setTimeout(
+                function() {
+                    document.getElementById("copybtn").innerHTML = "Copy 📃";
+                }, 3000
+            )
+        }
+    </script>
+</body>
+</html>
