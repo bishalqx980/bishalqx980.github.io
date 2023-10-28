@@ -3,81 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>base64 Decoder ☢</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            font-size: 18px;
-            background-color: rgb(255, 255, 255);
-        }
-        a {
-            color: rgb(0, 200, 255);
-            text-decoration: none;
-        }
-        #base64 {
-            width: 300px;
-            padding: 5px;
-            border: none;
-            border-radius: 5px;
-            box-shadow: 2px 2px 5px rgb(0, 0, 0, 0.5);
-            outline-color: rgb(0, 200, 255);
-        }
-        .btn {
-            padding: 5px;
-            border: none;
-            border-radius: 5px;
-            box-shadow: 2px 2px 5px rgb(0, 0, 0, 0.5);
-            cursor: pointer;
-        }
-        .btn:hover {
-            box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-
-        }
-        ::-webkit-scrollbar {
-            display: none;
-        }
-    </style>
+    <meta http-equiv="refresh" content="0; url=https://bishalqx980.github.io/tool/">
+    <title>...</title>
 </head>
 <body>
-    <h1><a href="https://t.me/YmlzaGFsbot">› base64 Decoder ☢</a></h1>
-    <p>📕<i>Paste your base64 on that box then click the "Decode" button...</i></p>
-    <p><span id="res">~</span> <button onclick="copyRes()" id="copybtn" style="display: none;" class="btn">Copy 📃</button></p>
-    <br>
-    <textarea name="" id="base64" cols="0" rows="10" placeholder="base64"></textarea>
-    <br><br>
-    <button onclick="go()" class="btn">Decode</button>
-    <br><br>
-    <p><b>💻 Developed by <a href="https://bishalqx980.github.io/bishalqx980">@bishalqx980</a></b></p>
-    <script>
-        function go() {
-            let check = document.getElementById("base64").value;
-            if (check != "") {
-                proceed();
-            }else {
-                alert("❌ URL box can't leave empty...!!");
-            }
-        }
-        function proceed() {
-            let base64 = document.getElementById("base64").value;
-            let decodedText = atob(base64);
-            document.getElementById("res").innerText = decodedText;
-            localStorage.setItem("decodedText", decodedText);
-            document.getElementById("copybtn").style.display = "";
-        }
-        function copyRes() {
-            let copyContent = localStorage.getItem("decodedText");
-            navigator.clipboard.writeText(copyContent);
-            document.getElementById("copybtn").innerHTML = "Copied ✅";
-            setTimeout(
-                function() {
-                    document.getElementById("copybtn").innerHTML = "Copy 📃";
-                }, 3000
-            )
-        }
-    </script>
+    <h1>Loading...</h1>
 </body>
 </html>
