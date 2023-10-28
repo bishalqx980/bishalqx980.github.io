@@ -69,3 +69,48 @@ function URLShortener() {
         Response.innerHTML = "⚠ Tᴇxᴛ Aʀᴇᴀ ᴄᴀɴ'ᴛ ʟᴇᴀᴠᴇ ᴇᴍᴘᴛʏ...!!";
     }
 }
+
+// TinyCaps Font
+const charMap = {
+    'A': 'ᴀ',
+    'B': 'ʙ',
+    'C': 'ᴄ',
+    'D': 'ᴅ',
+    'E': 'ᴇ',
+    'F': 'ғ',
+    'G': 'ɢ',
+    'H': 'ʜ',
+    'I': 'ɪ',
+    'J': 'ᴊ',
+    'K': 'ᴋ',
+    'L': 'ʟ',
+    'M': 'ᴍ',
+    'N': 'ɴ',
+    'O': 'ᴏ',
+    'P': 'ᴘ',
+    'Q': 'ǫ',
+    'R': 'ʀ',
+    'S': 's',
+    'T': 'ᴛ',
+    'U': 'ᴜ',
+    'V': 'ᴠ',
+    'W': 'ᴡ',
+    'X': 'x',
+    'Y': 'ʏ',
+    'Z': 'ᴢ'
+};
+
+function TinyCaps() {
+    let Response = document.getElementById("Response");
+    let inputArea = document.getElementById("inputArea");
+    let ConvertedFont = '';
+
+    for (const char of inputArea.value) {
+        const transformedChar = charMap[char.toUpperCase()] || char;
+        ConvertedFont += transformedChar;
+    }
+
+    Response.innerText = ConvertedFont;
+    localStorage.setItem("Response", ConvertedFont);
+    CopyButton.style.display = "";
+}
