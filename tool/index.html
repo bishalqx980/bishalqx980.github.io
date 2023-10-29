@@ -7,20 +7,22 @@
     <link rel="stylesheet" href="canvas.css">
     <script src="script.js"></script>
 </head>
-<body>
-    <h1>.../ʜᴏᴍᴇ</h1>
+<body onload="load()">
+    <h1>.../ʜᴏᴍᴇ <span class="clock">ᴛɪᴍᴇ: <span id="clock"></span></span></h1>
     <hr>
     <div class="mainDIV">
         <h1>➲ Rᴇsᴘᴏɴsᴇ: <span id="Response"></span> <button id="CopyButton" class="btn" style="display: none;" onclick="CopyResponse()">Cᴏᴘʏ 📄</button></h1>
-        <textarea id="inputArea" class="inputArea" placeholder="ᴛʏᴘᴇ ʜᴇʀᴇ"></textarea>
+        <textarea id="inputArea" class="inputArea" placeholder="ᴛʏᴘᴇ ʜᴇʀᴇ" oninput="inputAreaScripts()"></textarea>
         <br><br>
+        <p class="settingMenu">AutoTinyCapsFont ➲ <input type="checkbox" name="" id="TinyCapsCB" onchange="TinyCapsCB()"></p>
+        <br>
         <button class="btn" onclick="encode()">Text ➲ base64</button>
         <button class="btn" onclick="decode()">base64 ➲ Text</button>
         <button class="btn" onclick="URLShortener()">URL ➲ ShortURL</button>
         <button class="btn" onclick="TinyCaps()">➲ TinyCapsFont</button>
     </div>
     <div class="credit">
-        <p>💻 Dᴇᴠᴇʟᴏᴘᴇᴅ ʙʏ <a href="https://bishalqx980.github.io/bishalqx980">@bishalqx980</a><br><span style="font-size: 14px;">ɪɴɪᴛɪᴀʟɪᴢᴇ: 01 ᴏᴄᴛ 2023 ʀᴇʟᴇᴀsᴇ: ᴠ2.0 (28 ᴏᴄᴛ 2023)</span></p>
+        <p>💻 Dᴇᴠᴇʟᴏᴘᴇᴅ ʙʏ <a href="https://bishalqx980.github.io/bishalqx980">@bishalqx980</a><br><span style="font-size: 14px;">ɪɴɪᴛɪᴀʟɪᴢᴇ: 01 ᴏᴄᴛ 2023 ʀᴇʟᴇᴀsᴇ: ᴠ2.2 (29 ᴏᴄᴛ 2023)</span></p>
     </div>
 </body>
 </html>

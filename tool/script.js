@@ -1,3 +1,42 @@
+// onload event
+function load() {
+    // Tiny Caps Font
+    let TinyCapsCBLS = localStorage.getItem("TinyCapsCB")
+    let TinyCapsCB = document.getElementById("TinyCapsCB");
+
+    if (TinyCapsCBLS == "true") {
+        TinyCapsCB.checked = true;
+    }else {
+        TinyCapsCB.checked = false;
+    }
+    
+    // Clock
+    setInterval(function (){
+        let date = new Date();
+        let gethour = date.getHours();
+        let min = date.getMinutes();
+        let sec = date.getSeconds();
+
+        if (gethour > "12") {
+            let hour = gethour - "12";
+            let sun = " ᴘᴍ";
+            document.getElementById("clock").innerHTML = hour + ":" + min + ":" + sec + sun;
+        }else if (gethour < "12") {
+            let hour = gethour;
+            let sun = " ᴀᴍ";
+            document.getElementById("clock").innerHTML = hour + ":" + min + ":" + sec + sun;
+        }
+    }, 1000)
+}
+
+// clear response area
+function clearResponse() {
+    let Response = document.getElementById("Response");
+    setTimeout(function (){
+        Response.innerHTML = "";
+    }, 3000)
+}
+
 // Copy
 function CopyResponse() {
     let CopyButton = document.getElementById("CopyButton");
@@ -47,6 +86,9 @@ function URLShortener() {
     let Response = document.getElementById("Response");
     let inputArea = document.getElementById("inputArea");
     let api_key = "d8e99e07526a08c6c137ed0ddd99911266ca8950";
+
+    // loading
+    Response.innerHTML = "⚡ Please wait...";
 
     if (inputArea.value != "") {
         let url = "https://shrinkme.io/api?api="+ api_key +"&url="+ inputArea.value +"&format=text"
@@ -98,7 +140,30 @@ const charMap = {
     'X': 'x',
     'Y': 'ʏ',
     'Z': 'ᴢ'
-};
+}
+
+function inputAreaScripts() {
+    // auto Tiny Caps
+    let TinyCapsCB = document.getElementById("TinyCapsCB");
+
+    if (TinyCapsCB.checked == true) {
+        TinyCaps();
+    }
+}
+function TinyCapsCB() {
+    let TinyCapsCB = document.getElementById("TinyCapsCB");
+    let Response = document.getElementById("Response");
+
+    if (TinyCapsCB.checked == true) {
+        localStorage.setItem("TinyCapsCB", "true");
+        Response.innerHTML = "AutoTinyCapsFont Enabled ✅";
+        clearResponse();
+    }else {
+        localStorage.setItem("TinyCapsCB", "false");
+        Response.innerHTML = "AutoTinyCapsFont Disabled ❌";
+        clearResponse();
+    }
+}
 
 function TinyCaps() {
     let Response = document.getElementById("Response");
