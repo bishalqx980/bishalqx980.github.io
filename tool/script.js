@@ -29,7 +29,7 @@ function load() {
             sun = " ᴘᴍ";
         }
     
-        document.getElementById("clock").innerHTML = hour + ":" + min + ":" + sec + sun;
+        document.getElementById("clock").innerHTML = ": " + hour + ":" + min + ":" + sec + sun;
     }, 1000);
     
 }
