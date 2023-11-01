@@ -11,22 +11,27 @@ function load() {
     }
     
     // Clock
-    setInterval(function (){
+    setInterval(function () {
         let date = new Date();
         let gethour = date.getHours();
         let min = date.getMinutes();
         let sec = date.getSeconds();
-
-        if (gethour > "12") {
-            let hour = gethour - "12";
-            let sun = " ᴘᴍ";
-            document.getElementById("clock").innerHTML = hour + ":" + min + ":" + sec + sun;
-        }else if (gethour < "12") {
-            let hour = gethour;
-            let sun = " ᴀᴍ";
-            document.getElementById("clock").innerHTML = hour + ":" + min + ":" + sec + sun;
+        let hour, sun;
+    
+        if (gethour > 12) {
+            hour = gethour - 12;
+            sun = " ᴘᴍ";
+        } else if (gethour < 12) {
+            hour = gethour;
+            sun = " ᴀᴍ";
+        } else {
+            hour = 12;
+            sun = " ᴘᴍ";
         }
-    }, 1000)
+    
+        document.getElementById("clock").innerHTML = hour + ":" + min + ":" + sec + sun;
+    }, 1000);
+    
 }
 
 // clear response area
