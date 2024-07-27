@@ -1,42 +1,53 @@
 body {
     width: 100%;
     margin: auto;
-    font-family: sans-serif;
-}
-.head {
-    background: url("./bgimg.jpg");
+    background: linear-gradient(135deg, rgb(50, 180, 255), rgb(255, 100, 180));
     color: rgb(255, 255, 255);
-    background-size: cover;
     background-repeat: no-repeat;
     height: 80vh;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+hr {
+    opacity: 50%;
+    width: 80%;
+}
+
+.home-div {
+    width: 80%;
+    margin: auto;
+    text-align: start;
+    border-bottom: solid 5px rgb(255, 255, 255);
+}
+
+.main-div {
+    height: 80vh;
     max-height: 80vh;
-    text-align: center;
-    padding: 5px;
 }
+
 .btn {
-    background-color: rgb(255, 255, 255, 0.1);
+    padding: 10px;
+    background: transparent;
     color: rgb(255, 255, 255);
-    border: none;
-    border-radius: 5px;
-    padding: 15px;
     font-size: 18px;
-    margin-top: 0.5%;
-    margin-bottom: 0.5%;
-    margin-left: 0.5%;
-    margin-right: 0.5%;
-    transition: 300ms;
-    cursor: pointer;
-}
-.btn:hover {
-    background-color: rgb(255, 255, 255, 0.3);
+    border: none;
+    border-radius: 10px;
     box-shadow: 0px 0px 5px rgb(255, 255, 255);
+    margin: 1% 1%;
+    cursor: pointer;
+    transition: 600ms;
 }
-.article {
-    text-align: center;
-    color: rgb(0, 200, 150);
-    padding: 5px;
+
+.btn:hover {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
 }
+
+.credit-div {
+    color: rgb(50, 180, 255);
+}
+
 a {
-    color: rgb(0, 150, 255);
-    text-decoration: none;
+    color: rgb(255, 100, 180);
 }
