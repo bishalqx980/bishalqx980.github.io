@@ -8,6 +8,7 @@ function log_msg(message, title) {
 
 
 function load() {
+    log_msg("[+] Please wait...", "Please wait...")
     log_msg("[+] Getting device info...")
 
     var device_info = navigator.userAgent;
