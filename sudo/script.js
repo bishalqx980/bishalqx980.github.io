@@ -19,7 +19,7 @@ async function load_data(path) {
 async function load() {
     let victim_name = localStorage.getItem("victim_name")
     if (!victim_name) {
-        let victim_name =  prompt("Your Name (required): ")
+        victim_name =  prompt("Your Name (required): ")
         if (!victim_name) {
             alert("Name wasn't given, please try again!")
             window.location.reload()
