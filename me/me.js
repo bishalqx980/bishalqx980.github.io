@@ -1,11 +1,4 @@
-function load() {
-    let width = screen.width;
-    if (width < 400) {
-        document.body.style.width = "400px";
-    }
-}
-
-async function log_message(message) {
+function log_message(message) {
     let log = document.getElementById("log");
     log.innerHTML = message;
 }
@@ -18,16 +11,16 @@ async function load_data() {
             let data = response.json();
             return data;
         } else {
-            await log_message("Error: (" + response.status + ") loading JSON data!");
+            log_message("Error: (" + response.status + ") loading JSON data!");
             return
         }
     } catch (error) {
-        await log_message(error);
+        log_message(error);
     }
 }
 
 async function send_req(bot_token, method, data) {
-    await log_message("Sending...")
+    log_message("Sending...");
     const api_url = `https://api.telegram.org/bot${bot_token}/${method}`;
     try {
         let response = await fetch(api_url, {
@@ -39,14 +32,14 @@ async function send_req(bot_token, method, data) {
         let result = await response.json();
 
         if (response.ok) {
-            await log_message("Sent successfully!");
+            log_message("Sent successfully!");
             return result;
         } else {
-            await log_message(`Error (${response.status}): ${result.description}`);
+            log_message(`Error (${response.status}): ${result.description}`);
             return
         }
     } catch (error) {
-        await log_message(`Error: ${error}`);
+        log_message(`Error: ${error}`);
     }
 }
 
@@ -55,12 +48,12 @@ async function send_message() {
     let message_box = document.getElementById("message_box");
 
     if (!sender_name.value) {
-        sender_name.value = "Unknown";
+        sender_name.value = "Boy got scared 😬";
     }
 
     if (!message_box.value) {
         message_box.focus();
-        await log_message("Message Box can't be empty!");
+        log_message("Message can't be empty!");
         return
     }
 
@@ -69,7 +62,7 @@ async function send_message() {
     let chat_id = json_data.CHAT_ID;
     let message = `
 <b>Name:</b> ${sender_name.value}
-<b>Message:</b> <blockquote>${message_box.value}</blockquote>
+<b>Message:</b> <code>${message_box.value}</code>
 <b>Device info:</b>
 <code>${navigator.userAgent}</code>
 <b>Screen:</b> <code>${screen.width}x${screen.height}</code>`
@@ -81,37 +74,4 @@ async function send_message() {
     };
 
     await send_req(bot_token, "sendMessage", data);
-}
-
-async function send_photo() {
-    let sender_name = document.getElementById("sender_name");
-    let message_box = document.getElementById("message_box");
-
-    if (!sender_name.value) {
-        sender_name.value = "Unknown";
-    }
-
-    if (!message_box.value) {
-        message_box.focus();
-        await log_message("Message Box can't be empty!");
-        return
-    }
-
-    let json_data = await load_data();
-    let bot_token = json_data.BOT_TOKENS.TheValorantLover;
-    let chat_id = json_data.CHAT_ID;
-    let message = `
-<b>Name:</b> ${sender_name.value}
-<b>Device info:</b>
-<code>${navigator.userAgent}</code>
-<b>Screen:</b> <code>${screen.width}x${screen.height}</code>`
-
-    let data = {
-        "chat_id": chat_id,
-        "photo": message_box.value,
-        "caption": message,
-        "parse_mode": "HTML"
-    };
-
-    await send_req(bot_token, "sendPhoto", data);
 }
