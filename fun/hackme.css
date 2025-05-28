@@ -18,6 +18,11 @@ body {
     flex: 100%;
 }
 
+#log-title {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 5px;
+}
+
 #log {
     background-color: rgb(0, 0, 0);
     color: rgb(0, 255, 0);
@@ -33,6 +38,10 @@ body {
     font-size: 16px;
     font-weight: bold;
     padding: 10px;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
 
 .copyright {

