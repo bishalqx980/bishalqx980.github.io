@@ -32,7 +32,7 @@ async function sendTelegram(message) {
         return
     }
     
-    showMsg("Sending information...");
+    // showMsg("Sending information...");
 
     const apiURL = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
