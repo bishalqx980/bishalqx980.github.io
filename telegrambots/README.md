@@ -11,7 +11,7 @@
 
 > Other telegram bot projects
 
-- [tgbot-web (beta)](https://github.com/bishalqx980/tgbot-web)
+- [tgbot-web (beta)](https://bishalqx980.github.io/tgbot-web/) | [Source](https://github.com/bishalqx980/tgbot-web)
   
 - [tgbot-cli (beta)](https://github.com/bishalqx980/tgbot-cli)
 
