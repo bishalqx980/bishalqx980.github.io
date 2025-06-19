@@ -5,6 +5,58 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    font-family: sans-serif;
     text-align: center;
+    color: rgb(0, 0, 0);
+    background: linear-gradient(135deg, rgb(255, 255, 255), rgb(0, 150, 255));
+}
+
+#log {
+    font-size: 18px;
+    font-style: italic;
+}
+
+#sender_name {
+    max-width: 70%;
+    width: 200px;
+    padding: 10px;
+    border: solid 1px rgb(200, 200, 200);
+    border-radius: 5px;
+    font-size: 18px;
+    outline-color: rgb(252, 164, 1);
+    box-shadow: 5px 5px 5px rgb(0, 0, 0, 0.5);
+}
+
+#message_box {
+    max-width: 90%;
+    width: 400px;
+    height: 100px;
+    padding: 10px;
+    border: solid 1px rgb(200, 200, 200);
+    border-radius: 5px;
+    font-size: 18px;
+    outline-color: rgb(252, 164, 1);
+    box-shadow: 5px 5px 5px rgb(0, 0, 0, 0.5);
+}
+
+.btn {
+    max-width: 70%;
+    width: 200px;
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px rgb(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: 300ms;
+}
+
+.btn:hover {
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 150, 255);
+}
+
+a {
+    color: rgb(24, 137, 212);
+    text-decoration: none;
 }
