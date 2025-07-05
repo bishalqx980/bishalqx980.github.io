@@ -7,8 +7,8 @@ body {
     align-items: center;
     font-family: sans-serif;
     text-align: center;
-    color: rgb(0, 0, 0);
-    background: linear-gradient(135deg, rgb(255, 255, 255), rgb(0, 150, 255));
+    color: #ffffff;
+    background: linear-gradient(135deg, rgb(0, 0, 0), rgb(0, 149, 255));
 }
 
 #log {
