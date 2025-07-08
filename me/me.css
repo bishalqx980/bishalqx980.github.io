@@ -28,7 +28,7 @@ body {
 }
 
 #message_box {
-    max-width: 90%;
+    max-width: 80%;
     width: 400px;
     height: 100px;
     padding: 10px;

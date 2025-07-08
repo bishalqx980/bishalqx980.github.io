@@ -48,7 +48,7 @@ async function send_message() {
     let message_box = document.getElementById("message_box");
 
     if (!sender_name.value) {
-        sender_name.value = "Huh, not funny 😒!!";
+        sender_name.value = "Anonymous";
     }
 
     if (!message_box.value) {
