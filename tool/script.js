@@ -184,3 +184,39 @@ function TinyCaps() {
     localStorage.setItem("Response", ConvertedFont);
     CopyButton.style.display = "";
 }
+
+function showLocalStorage() {
+    const Response = document.getElementById("Response");
+    const allData = {};
+
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        allData[key] = localStorage.getItem(key);
+    }
+
+    let data = JSON.stringify(allData);
+
+    Response.textContent = data;
+    localStorage.setItem("Response", data);
+    CopyButton.style.display = "";
+}
+
+function clearLocalStorage() {
+    const Response = document.getElementById("Response");
+    const inputArea = document.getElementById("inputArea");
+    const allData = {};
+
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        allData[key] = localStorage.getItem(key);
+    }
+
+    let data = JSON.stringify(allData, null, 2);
+
+    inputArea.value = data;
+    localStorage.setItem("Response", data);
+    CopyButton.style.display = "";
+
+    localStorage.clear();
+    Response.textContent = "Local Storage Cleared!";
+}
