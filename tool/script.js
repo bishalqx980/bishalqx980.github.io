@@ -187,6 +187,7 @@ function TinyCaps() {
 
 function showLocalStorage() {
     const Response = document.getElementById("Response");
+    const inputArea = document.getElementById("inputArea");
     const allData = {};
 
     for (let i = 0; i < localStorage.length; i++) {
@@ -194,11 +195,12 @@ function showLocalStorage() {
         allData[key] = localStorage.getItem(key);
     }
 
-    let data = JSON.stringify(allData);
+    let data = JSON.stringify(allData, null, 2);
 
-    Response.textContent = data;
+    inputArea.value = data;
     localStorage.setItem("Response", data);
     CopyButton.style.display = "";
+    Response.textContent = "Local Storage Data Shown Below!";
 }
 
 function clearLocalStorage() {
