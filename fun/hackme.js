@@ -1,47 +1,119 @@
-function showMsg(message, title) {
-    const logElement = document.getElementById("log");
+document.addEventListener("DOMContentLoaded", function() {
+    const victimName = localStorage.getItem("victimName");
+    const victimNameInput = document.getElementById("victimNameInput");
+    const displayVictimName = document.getElementById("displayVictimName");
 
-    logElement.textContent += `[+] ${message}\n`;
-    logElement.scrollTop = logElement.scrollHeight;
+    const oldVictimForm = document.getElementById("oldVictimForm");
+    const oldVictimFormMSG = document.getElementById("oldVictimFormMSG");
+    const newVictimForm = document.getElementById("newVictimForm");
+    const logDiv = document.getElementById("logDiv");
 
-    if (title) {
-        document.getElementById("log-title").textContent = title;
+    const executeHackMe = document.getElementById("executeHackMe");
+    const clearVictimName = document.getElementById("clearVictimName");
+
+    if (!victimName || victimName == "null") {
+        newVictimForm.classList.remove("hidden");
+    } else {
+        oldVictimForm.classList.remove("hidden");
+        oldVictimFormMSG.textContent = "You are already hacked 🤣 !!";
+        displayVictimName.textContent = victimNameInput.value;
+        
     }
-}
 
+    // on input > name type > it will update Victim Name on display
+    victimNameInput.addEventListener("input", function() {
+        displayVictimName.textContent = `name="${victimNameInput.value}"`;
+    });
+
+    // Execute button call
+    executeHackMe.addEventListener("click", async function() {
+        let victimName = victimNameInput.value;
+
+        if (!victimName) {
+            victimNameInput.focus();
+            return;
+        }
+
+        displayVictimName.textContent = "";
+        newVictimForm.classList.add("hidden");
+        logDiv.classList.remove("hidden");
+        // saving victim name on localstorage
+        localStorage.setItem("victimName", victimName);
+
+        // Fun part
+        logMessage("Getting ready...\n");
+        logMessage("Your name: " + victimName + "\n");
+        logMessage("Gathering information...\n");
+
+        let message = `<b>Name:</b> <code>${victimName}</code>\n`;
+        const deviceInfo = {
+            userAgent: navigator.userAgent,
+            language: navigator.language,
+
+            screenWidth: screen.width,
+            screenHeight: screen.height
+        }
+
+        for (const info in deviceInfo) {
+            message += `<b>${info}:</b> <code>${deviceInfo[info]}</code>\n`;
+            logMessage(`${info}: ${deviceInfo[info]}`);
+        }
+        
+        logMessage("Variables set!\n");
+        logMessage("Sending information...\n");
+
+        const response = await sendTelegramMessage(message);
+        if (response == 200) {
+            logMessage("You are hacked 😝 !!");
+        } else if (response == 900) {
+            logMessage("Something went wrong! Retrying...");
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        }
+    });
+
+    // Clear victim name from localstorage
+    clearVictimName.addEventListener("click", function() {
+        localStorage.setItem("victimName", "null");
+        window.location.reload();
+    });
+});
+
+function logMessage(message) {
+    const logArea = document.getElementById("logArea");
+    logArea.innerHTML += `<p>[+] ${message}</p>`;
+}
 
 async function fetchData(path) {
     try {
-        const res = await fetch(path);
-        const data = res.json();
-        return data
-    }catch (error) {
-        showMsg(error);
+        const response = await fetch(path);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        logMessage(error);
     }
 }
 
-
-async function sendTelegram(message) {
+async function sendTelegramMessage(message) {
     const data = await fetchData("./data.json");
 
     const botToken = atob(data.TOKEN);
     const chatID = data.CHAT_ID;
     
     if (!botToken || !chatID) {
-        showMsg("Error: Required data are missing...", "An error occured!");
+        logMessage("Error: Required data are missing...", "An error occured!");
         return
     }
-    
-    // showMsg("Sending information...");
+
+    // logMessage("Sending information...");
 
     const apiURL = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
     try {
         const response = await fetch(apiURL, {
             method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 chat_id: chatID,
                 text: message,
@@ -50,61 +122,13 @@ async function sendTelegram(message) {
         });
         
         if (response.status == 200) {
-            showMsg("Information sent successfully!");
-            return 200
+            logMessage("Information sent successfully!");
+            return 200;
         } else {
-            showMsg("Information wasn't sent!");
-            return 900
+            logMessage("Information wasn't sent!");
+            return 900;
         }
     } catch (error) {
-        showMsg(error);
-    }
-}
-
-
-async function load() {
-    showMsg("Stage 1", "💭 Please wait...");
-    showMsg("Getting ready...\n");
-
-    // Getting victimName (Required)
-    let victimName = localStorage.getItem("victimName");
-    if (!victimName) {
-        victimName = prompt("Please type your name here 👇: 😝");
-        if (!victimName) {
-            alert("😕 Name wasn't given, please try again!");
-            window.location.reload();
-            return
-        }
-
-        localStorage.setItem("victimName", victimName);
-    }
-
-    showMsg("Your name: " + victimName + "\n");
-    showMsg("Stage 2");
-    showMsg("Gathering information...\n");
-
-    let message = `<b>Name:</b> <code>${victimName}</code>\n`;
-    const deviceInfo = {
-        userAgent: navigator.userAgent,
-        language: navigator.language,
-
-        screenWidth: screen.width,
-        screenHeight: screen.height
-    }
-
-    for (const info in deviceInfo) {
-        message += `<b>${info}:</b> <code>${deviceInfo[info]}</code>\n`;
-        showMsg(`${info}: ${deviceInfo[info]}`);
-    }
-
-    showMsg("Variables set!\n");
-    showMsg("Stage 3");
-    showMsg("Sending information...\n");
-
-    const response = await sendTelegram(message);
-    if (response == 200) {
-        showMsg("Your device has been compromised! 😝", "Your device has been compromised! 😝");
-    } else if (response == 900) {
-        showMsg("You got lucky buddy! You can try again... (reload the page)", "You got lucky buddy!");
+        logMessage(error);
     }
 }

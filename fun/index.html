@@ -3,15 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./assets/virus.png" type="image/x-icon">
     <link rel="stylesheet" href="./hackme.css">
     <script src="./hackme.js"></script>
-    <title>Hackme</title>
+    <title>function HackMe()</title>
 </head>
-<body onload="load()">
-    <div class="main-div"> 
-        <h1 id="log-title">$log</h1>
-        <textarea id="log" readonly></textarea>
-        <p class="copyright">Copyright: <a href="https://bishalqx980.github.io/bishalqx980/">bishalqx980</a></p>
+<body>
+    <div class="mainDiv">
+        <div>
+            <h1><span style="color: rgb(180, 0, 180);">function</span> <span style="color: rgb(0, 150, 255);">HackMe(<span style="color: rgb(40, 180, 0);" id="displayVictimName"></span>)</span></h1>
+        </div>
+
+        <div class="section hidden" id="oldVictimForm">
+            <h2 id="oldVictimFormMSG"></h2>
+        </div>
+
+        <div class="section hidden" id="newVictimForm">
+            <h2>What's your name?</h2>
+            <input type="text" name="" id="victimNameInput" maxlength="10" placeholder="Type here...">
+            <button class="btn" id="executeHackMe">Submit</button>
+        </div>
+
+        <div class="section hidden" id="logDiv">
+            <h3 style="text-align: left;">Response:</h3>
+            <div name="" id="logArea"></div>
+        </div>
+
+        <!-- Secret Button to clear VictimName from localstorage -->
+        <button id="clearVictimName"></button>
     </div>
 </body>
 </html>

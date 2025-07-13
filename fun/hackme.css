@@ -1,54 +1,85 @@
 body {
     width: 100%;
     height: 100vh;
-    margin: auto;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    background-image: url("./assets/bgimg.png");
-    background-color: rgb(0, 0, 0);
-    color: rgb(0, 255, 0);
     text-align: center;
-    font-family: sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bold;
 }
 
-.main-div {
-    flex: 100%;
+.mainDiv {
+    width: 500px;
+    max-width: 80%;
+    border: solid 1px #ddd;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px #ddd;
+    box-sizing: border-box;
+    overflow: auto;
 }
 
-#log-title {
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 5px;
+.section {
+    width: 300px;
+    max-width: 80%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: solid 1px #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px #ddd;
 }
 
-#log {
-    background-color: rgb(0, 0, 0);
-    color: rgb(0, 255, 0);
-    min-width: 300px;
-    width: 50%;
-    height: 50vh;
-    outline: none;
-    resize: none;
-    border: solid 3px rgb(0, 255, 0);
-    border-radius: 5px 5px 100px;
-    box-shadow: 0px 0px 200px rgb(0, 255, 0);
-    font-family: monospace;
-    font-size: 16px;
-    font-weight: bold;
+#victimNameInput {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
     padding: 10px;
+    box-sizing: border-box;
+    border: solid 1px #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px #ddd;
+    outline-color: purple;
+}
+
+.btn {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: solid 1px #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px #ddd;
+    font-weight: bold;
+    background-color: rgb(0, 150, 255);
+    color: white;
+    transition-duration: 300ms;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: rgb(0, 120, 255);
+}
+
+.hidden {
+    display: none;
+}
+
+#logArea {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: solid 1px #ddd;
+    box-sizing: border-box;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px #ddd;
+    text-align: left;
 }
 
 ::-webkit-scrollbar {
     display: none;
-}
-
-.copyright {
-    background-color: rgba(77, 77, 77, 0.37);
-    padding: 5px;
-}
-
-a {
-    color: rgb(255, 255, 255);
 }
