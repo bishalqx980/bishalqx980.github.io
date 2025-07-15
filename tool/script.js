@@ -1,123 +1,3 @@
-// onload event
-function load() {
-    // Tiny Caps Font
-    let TinyCapsCBLS = localStorage.getItem("TinyCapsCB")
-    let TinyCapsCB = document.getElementById("TinyCapsCB");
-
-    if (TinyCapsCBLS == "true") {
-        TinyCapsCB.checked = true;
-    }else {
-        TinyCapsCB.checked = false;
-    }
-    
-    // Clock
-    setInterval(function () {
-        let date = new Date();
-        let gethour = date.getHours();
-        let min = date.getMinutes();
-        let sec = date.getSeconds();
-        let hour, sun;
-    
-        if (gethour > 12) {
-            hour = gethour - 12;
-            sun = " ᴘᴍ";
-        } else if (gethour < 12) {
-            hour = gethour;
-            sun = " ᴀᴍ";
-        } else {
-            hour = 12;
-            sun = " ᴘᴍ";
-        }
-    
-        document.getElementById("clock").innerHTML = ": " + hour + ":" + min + ":" + sec + sun;
-    }, 1000);
-    
-}
-
-// clear response area
-function clearResponse() {
-    let Response = document.getElementById("Response");
-    setTimeout(function (){
-        Response.innerHTML = "";
-    }, 3000)
-}
-
-// Copy
-function CopyResponse() {
-    let CopyButton = document.getElementById("CopyButton");
-    let CopyResponse = localStorage.getItem("Response");
-
-    navigator.clipboard.writeText(CopyResponse);
-    CopyButton.innerHTML = "Cᴏᴘɪᴇᴅ ✅";
-    setTimeout(
-        function() {
-            CopyButton.innerHTML = "Cᴏᴘʏ 📄";
-        }, 3000
-    )
-}
-
-// base64 decode
-function decode() {
-    let Response = document.getElementById("Response");
-    let inputArea = document.getElementById("inputArea");
-
-    if (inputArea.value != "") {
-        let decoded_text = atob(inputArea.value);
-        Response.innerHTML = decoded_text;
-        localStorage.setItem("Response", decoded_text);
-        CopyButton.style.display = "";
-    }else {
-        Response.innerHTML = "⚠ Tᴇxᴛ Aʀᴇᴀ ᴄᴀɴ'ᴛ ʟᴇᴀᴠᴇ ᴇᴍᴘᴛʏ...!!";
-    }
-}
-
-// base64 encode
-function encode() {
-    let Response = document.getElementById("Response");
-    let inputArea = document.getElementById("inputArea");
-
-    if (inputArea.value != "") {
-        let encoded_text = btoa(inputArea.value);
-        Response.innerHTML = encoded_text;
-        localStorage.setItem("Response", encoded_text);
-        CopyButton.style.display = "";
-    }else {
-        Response.innerHTML = "⚠ Tᴇxᴛ Aʀᴇᴀ ᴄᴀɴ'ᴛ ʟᴇᴀᴠᴇ ᴇᴍᴘᴛʏ...!!";
-    }
-}
-
-// URL Shortener
-function URLShortener() {
-    let Response = document.getElementById("Response");
-    let inputArea = document.getElementById("inputArea");
-    let api_key = "d8e99e07526a08c6c137ed0ddd99911266ca8950";
-
-    // loading
-    Response.innerHTML = "⚡ Please wait...";
-
-    if (inputArea.value != "") {
-        let url = "https://shrinkme.io/api?api="+ api_key +"&url="+ inputArea.value +"&format=text"
-    
-        let api = new XMLHttpRequest();
-        api.open("GET", url, true);
-        api.send();
-        api.onload = function() {
-            let api_response = api.response;
-            if (api_response == "") {
-                Response.innerHTML = "⚠ Iɴᴠᴀʟɪᴅ URL !!";
-                CopyButton.style.display = "none";
-            }else {
-                Response.innerHTML = api_response;
-                localStorage.setItem("Response", api_response);
-                CopyButton.style.display = "";
-            }
-        }
-    }else {
-        Response.innerHTML = "⚠ Tᴇxᴛ Aʀᴇᴀ ᴄᴀɴ'ᴛ ʟᴇᴀᴠᴇ ᴇᴍᴘᴛʏ...!!";
-    }
-}
-
-// TinyCaps Font
 const charMap = {
     'A': 'ᴀ',
     'B': 'ʙ',
@@ -147,78 +27,153 @@ const charMap = {
     'Z': 'ᴢ'
 }
 
-function inputAreaScripts() {
-    // auto Tiny Caps
-    let TinyCapsCB = document.getElementById("TinyCapsCB");
+function convertFonts(text) {
+    let storage = "";
 
-    if (TinyCapsCB.checked == true) {
-        TinyCaps();
-    }
-}
-function TinyCapsCB() {
-    let TinyCapsCB = document.getElementById("TinyCapsCB");
-    let Response = document.getElementById("Response");
-
-    if (TinyCapsCB.checked == true) {
-        localStorage.setItem("TinyCapsCB", "true");
-        Response.innerHTML = "AutoTinyCapsFont Enabled ✅";
-        clearResponse();
-    }else {
-        localStorage.setItem("TinyCapsCB", "false");
-        Response.innerHTML = "AutoTinyCapsFont Disabled ❌";
-        clearResponse();
-    }
-}
-
-function TinyCaps() {
-    let Response = document.getElementById("Response");
-    let inputArea = document.getElementById("inputArea");
-    let ConvertedFont = '';
-
-    for (const char of inputArea.value) {
-        const transformedChar = charMap[char.toUpperCase()] || char;
-        ConvertedFont += transformedChar;
+    for (const char of text) {
+        storage += charMap[char.toUpperCase()] || char;
     }
 
-    Response.innerText = ConvertedFont;
-    localStorage.setItem("Response", ConvertedFont);
-    CopyButton.style.display = "";
+    return storage;
 }
 
-function showLocalStorage() {
+document.addEventListener("DOMContentLoaded", function() {
+    const TinyCapsCB = document.getElementById("TinyCapsCB");
+    const TinyCapsCBLocalStorage = localStorage.getItem("TinyCapsCB");
+
     const Response = document.getElementById("Response");
-    const inputArea = document.getElementById("inputArea");
-    const allData = {};
+    const CopyButton = document.getElementById("CopyButton");
 
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        allData[key] = localStorage.getItem(key);
+    if (TinyCapsCBLocalStorage == "true") {
+        TinyCapsCB.checked = true;
+    } else {
+        TinyCapsCB.checked = false;
     }
 
-    let data = JSON.stringify(allData, null, 2);
+    // copy button
+    CopyButton.addEventListener("click", function() {
+        const ResponseLocalStorage = localStorage.getItem("Response");
 
-    inputArea.value = data;
-    localStorage.setItem("Response", data);
-    CopyButton.style.display = "";
-    Response.textContent = "Local Storage Data Shown Below!";
-}
+        navigator.clipboard.writeText(ResponseLocalStorage);
+        CopyButton.textContent = "ᴄᴏᴘɪᴇᴅ ✅";
+        // restore button text
+        setTimeout(function() {
+            CopyButton.textContent = "ᴄᴏᴘʏ ʀᴇsᴘᴏɴsᴇ 📄";
+        }, 2000)
+    });
 
-function clearLocalStorage() {
-    const Response = document.getElementById("Response");
-    const inputArea = document.getElementById("inputArea");
-    const allData = {};
+    // base64 encode / decode
+    document.getElementById("encodeText").addEventListener("click", function() {
+        const inputArea = document.getElementById("inputArea");
 
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        allData[key] = localStorage.getItem(key);
-    }
+        if (!inputArea.value) {
+            Response.textContent = "⚠ ᴛᴇxᴛ ᴀʀᴇᴀ ᴄᴀɴ'ᴛ ʟᴇᴀᴠᴇ ᴇᴍᴘᴛʏ...!!";
+            return;
+        }
+        
+        const encodedText = btoa(inputArea.value);
+        Response.textContent = encodedText;
+        localStorage.setItem("Response", encodedText);
+    });
 
-    let data = JSON.stringify(allData, null, 2);
+    document.getElementById("decodeBase64").addEventListener("click", function() {
+        const inputArea = document.getElementById("inputArea");
 
-    inputArea.value = data;
-    localStorage.setItem("Response", data);
-    CopyButton.style.display = "";
+        if (!inputArea.value) {
+            Response.textContent = "⚠ ᴛᴇxᴛ ᴀʀᴇᴀ ᴄᴀɴ'ᴛ ʟᴇᴀᴠᴇ ᴇᴍᴘᴛʏ...!!";
+            return;
+        }
 
-    localStorage.clear();
-    Response.textContent = "Local Storage Cleared!";
-}
+        const decodedText = atob(inputArea.value);
+        Response.textContent = decodedText;
+        localStorage.setItem("Response", decodedText);
+    });
+    
+    // URL shortener
+    document.getElementById("ShortURL").addEventListener("click", async function() {
+        const inputArea = document.getElementById("inputArea");
+        const shortenerAPI = "ZDhlOTllMDc1MjZhMDhjNmMxMzdlZDBkZGQ5OTkxMTI2NmNhODk1MA==";
+
+        if (!inputArea.value) {
+            Response.textContent = "⚠ ᴛᴇxᴛ ᴀʀᴇᴀ ᴄᴀɴ'ᴛ ʟᴇᴀᴠᴇ ᴇᴍᴘᴛʏ...!!";
+            return;
+        }
+
+        Response.textContent = "⚡ Please wait...";
+
+        const params = new URLSearchParams({
+            api: atob(shortenerAPI),
+            url: inputArea.value,
+            format: "text"
+        });
+
+        const apiURL = `https://shrinkme.io/api?${params}`;
+        const response = await fetch(apiURL);
+        if (response.status != 200) {
+            Response.textContent = `Something went wrong! Error [${response.status}]`;
+            return;
+        }
+
+        const shortedURL = await response.text();
+        Response.textContent = shortedURL || "⚠ ɪɴᴠᴀʟɪᴅ ᴜʀʟ";
+
+        if (shortedURL) {
+            localStorage.setItem("Response", shortedURL);
+        }
+    });
+
+    // Tiny Caps font
+    document.getElementById("doTinyCaps").addEventListener("click", function() {
+        const inputArea = document.getElementById("inputArea");
+        const ConvertedFont = convertFonts(inputArea.value);
+
+        Response.textContent = ConvertedFont;
+        localStorage.setItem("Response", ConvertedFont);
+    });
+
+    // Auto tiny caps font
+    document.getElementById("inputArea").addEventListener("input", function() {
+        const TinyCapsCB = document.getElementById("TinyCapsCB");
+
+        if (TinyCapsCB.checked == true) {
+            const inputArea = document.getElementById("inputArea");
+            const ConvertedFont = convertFonts(inputArea.value);
+
+            Response.textContent = ConvertedFont;
+            localStorage.setItem("Response", ConvertedFont);
+        }
+    });
+
+    // Auto tiny caps Checkbox change/update
+    document.getElementById("TinyCapsCB").addEventListener("change", function() {
+        const TinyCapsCB = document.getElementById("TinyCapsCB");
+
+        if (TinyCapsCB.checked == true) {
+            localStorage.setItem("TinyCapsCB", "true");
+            Response.innerHTML = "Auto TinyCapsFont Enabled ✅";
+        } else {
+            localStorage.setItem("TinyCapsCB", "false");
+            Response.innerHTML = "Auto TinyCapsFont Disabled ❌";
+        }
+    });
+    
+    // Clock
+    setInterval(function () {
+        const date = new Date();
+        let hour = date.getHours(); // hour will be changed later
+        const min = date.getMinutes();
+        const sec = date.getSeconds();
+    
+        if (hour > 12) {
+            hour = hour - 12;
+            am_pm = "ᴘᴍ";
+        } else if (hour < 12) {
+            am_pm = "ᴀᴍ";
+        } else {
+            hour = 12;
+            am_pm = "ᴘᴍ";
+        }
+    
+        document.getElementById("clock").innerHTML = `${hour}:${min}:${sec} ${am_pm}`;
+    }, 1000);
+});
