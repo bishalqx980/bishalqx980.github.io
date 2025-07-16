@@ -125,8 +125,13 @@ document.addEventListener("DOMContentLoaded", function() {
     // Tiny Caps font
     document.getElementById("doTinyCaps").addEventListener("click", function() {
         const inputArea = document.getElementById("inputArea");
-        const ConvertedFont = convertFonts(inputArea.value);
+        
+        if (!inputArea.value) {
+            Response.textContent = "⚠ ᴛᴇxᴛ ᴀʀᴇᴀ ᴄᴀɴ'ᴛ ʟᴇᴀᴠᴇ ᴇᴍᴘᴛʏ...!!";
+            return;
+        }
 
+        const ConvertedFont = convertFonts(inputArea.value);
         Response.textContent = ConvertedFont;
         localStorage.setItem("Response", ConvertedFont);
     });
