@@ -8,12 +8,22 @@ body {
     font-family: sans-serif;
     text-align: center;
     color: #ffffff;
-    background: linear-gradient(135deg, rgb(0, 0, 0), rgb(0, 149, 255));
+    background: linear-gradient(135deg, rgb(20, 20, 20), rgb(0, 120, 215));
+}
+
+.container {
+    width: 80%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 #log {
+    opacity: 0.6;
     font-size: 18px;
-    font-style: italic;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 #sender_name {
@@ -22,18 +32,20 @@ body {
     padding: 10px;
     border: solid 1px rgb(200, 200, 200);
     border-radius: 5px;
+    font-family: sans-serif;
     font-size: 18px;
     outline-color: rgb(252, 164, 1);
     box-shadow: 5px 5px 5px rgb(0, 0, 0, 0.5);
 }
 
 #message_box {
-    max-width: 80%;
+    max-width: 90%;
     width: 400px;
     height: 100px;
     padding: 10px;
     border: solid 1px rgb(200, 200, 200);
     border-radius: 5px;
+    font-family: sans-serif;
     font-size: 18px;
     outline-color: rgb(252, 164, 1);
     box-shadow: 5px 5px 5px rgb(0, 0, 0, 0.5);

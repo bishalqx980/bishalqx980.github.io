@@ -63,6 +63,13 @@ hr {
     color: rgb(0, 0, 0);
 }
 
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .credit-div {
     width: 100%;
     margin-top: 3%;
