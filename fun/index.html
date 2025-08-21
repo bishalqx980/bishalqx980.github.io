@@ -10,27 +10,28 @@
 </head>
 <body>
     <div class="mainDiv">
-        <div>
-            <h1><span style="color: rgb(180, 0, 180);">function</span> <span style="color: rgb(0, 150, 255);">HackMe(<span style="color: rgb(40, 180, 0);" id="displayVictimName"></span>)</span></h1>
+        <div class="title">
+            <div class="logo">⚡</div>
+            <h1><span style="color: var(--accent);">function</span> <span style="color: var(--primary);">HackMe(<span style="color: var(--success);" id="displayVictimName"></span>)</span></h1>
         </div>
 
-        <div class="section hidden" id="oldVictimForm">
+        <div class="section hidden fade-in" id="oldVictimForm">
             <h2 id="oldVictimFormMSG"></h2>
         </div>
 
-        <div class="section hidden" id="newVictimForm">
+        <div class="section hidden fade-in" id="newVictimForm">
             <h2>What's your name?</h2>
-            <input type="text" name="" id="victimNameInput" maxlength="10" placeholder="Type here...">
-            <button class="btn" id="executeHackMe">Submit</button>
+            <input type="text" name="" id="victimNameInput" maxlength="10" placeholder="Type your name here...">
+            <button class="btn" id="executeHackMe">Execute HackMe()</button>
         </div>
 
-        <div class="section hidden" id="logDiv">
-            <h3 style="text-align: left;">Response:</h3>
+        <div class="section hidden fade-in" id="logDiv">
+            <h3 style="text-align: left;">System Response:</h3>
             <div name="" id="logArea"></div>
         </div>
 
         <!-- Secret Button to clear VictimName from localstorage -->
-        <button id="clearVictimName"></button>
+        <button id="clearVictimName">↺</button>
     </div>
 </body>
 </html>

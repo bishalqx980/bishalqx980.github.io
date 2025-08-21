@@ -1,19 +1,20 @@
-# [Telegram Bots](https://bishalqx980.github.io/telegrambots/)
+# Telegram Bots
 
-> Based on `python-telegram-bot` library
+> A collection of Telegram bot projects built with various Python libraries
 
-- [tgbot](https://github.com/bishalqx980/tgbot)
-- [assistant-tgbot](https://github.com/bishalqx980/assistant-tgbot)
+## Projects
 
-> Based on `pyrogram` or `kurigram` (pyrogram fork)
+### 🤖 Python-Telegram-Bot Based
+- **[tgbot](https://github.com/bishalqx980/tgbot)** - A general purpose Telegram bot
+- **[assistant-tgbot](https://github.com/bishalqx980/assistant-tgbot)** - An assistant-style Telegram bot
 
-- [Melina 2.0](https://github.com/bishalqx980/Melina)
+### ⚡ Pyrogram/Kurigram Based
+- **[Melina 2.0](https://github.com/bishalqx980/Melina)** - Advanced Telegram bot (pyrogram fork)
 
-> Other telegram bot projects
+### 🔗 Other Projects
+- **[tgbot-web (beta)](https://bishalqx980.github.io/tgbot-web/)** | [Source](https://github.com/bishalqx980/tgbot-web) - Web interface for Telegram bots
+- **[tgbot-cli (beta)](https://github.com/bishalqx980/tgbot-cli)** - Command-line interface for Telegram bots
 
-- [tgbot-web (beta)](https://bishalqx980.github.io/tgbot-web/) | [Source](https://github.com/bishalqx980/tgbot-web)
-  
-- [tgbot-cli (beta)](https://github.com/bishalqx980/tgbot-cli)
+---
 
-> Some info [!]
-- *Melina v1 was my first ever bot. Based on ptb lib.*
+> **Note:** Melina v1 was my first ever bot, built with the python-telegram-bot library.

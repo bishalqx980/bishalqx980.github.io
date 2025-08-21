@@ -61,10 +61,12 @@ async function send_message() {
     let bot_token = json_data.BOT_TOKENS.TheValorantLover;
     let chat_id = json_data.CHAT_ID;
     let message = `
+<blockquote><b>New Message!</b></blockquote>
+
 <b>Name:</b> ${sender_name.value}
 <b>Message:</b> <code>${message_box.value}</code>
-<b>Device info:</b>
-<code>${navigator.userAgent}</code>
+<b>Device info:</b> <code>${navigator.userAgent}</code>
+<b>Language:</b> <code>${navigator.language} (${navigator.languages.join(", ")})</code>
 <b>Screen:</b> <code>${screen.width}x${screen.height}</code>`
 
     let data = {
