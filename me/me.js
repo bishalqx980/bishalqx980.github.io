@@ -4,15 +4,14 @@ function log_message(message) {
 }
 
 async function load_data() {
-    const json_path = "https://gist.githubusercontent.com/bishalqx980/4a063168c8bfd6fd16a4b280d6e31728/raw/data.json";
+    const json_path = "https://gist.githubusercontent.com/bishalqx980/4a063168c8bfd6fd16a4b280d6e31728/raw/me.json";
     try {
         let response = await fetch(json_path);
         if (response.ok) {
-            let data = response.json();
+            let data = await response.json();
             return data;
         } else {
-            log_message("Error: (" + response.status + ") loading JSON data!");
-            return
+            log_message("⚠️ Error (" + response.status + ") loading JSON data!");
         }
     } catch (error) {
         log_message(error);
@@ -31,15 +30,14 @@ async function send_req(bot_token, method, data) {
 
         let result = await response.json();
 
-        if (response.ok) {
-            log_message("Sent successfully!");
+        if (response.status == 200) {
+            log_message("✅ Sent successfully!");
             return result;
         } else {
-            log_message(`Error (${response.status}): ${result.description}`);
-            return
+            log_message(`⚠️ Error (${response.status}): ${result.description}`);
         }
     } catch (error) {
-        log_message(`Error: ${error}`);
+        log_message(`⚠️ Error ${error}`);
     }
 }
 
@@ -47,19 +45,17 @@ async function send_message() {
     let sender_name = document.getElementById("sender_name");
     let message_box = document.getElementById("message_box");
 
-    if (!sender_name.value) {
-        sender_name.value = "Anonymous";
-    }
-
+    if (!sender_name.value) sender_name.value = "Anonymous";
     if (!message_box.value) {
         message_box.focus();
         log_message("Message can't be empty!");
-        return
+        return;
     }
 
     let json_data = await load_data();
-    let bot_token = json_data.BOT_TOKENS.TheValorantLover;
-    let chat_id = json_data.CHAT_ID;
+    let bot_token = json_data.bot_token;
+    let chat_id = json_data.chat_id;
+
     let message = `
 <blockquote><b>New Message!</b></blockquote>
 
@@ -67,7 +63,7 @@ async function send_message() {
 <b>Message:</b> <code>${message_box.value}</code>
 <b>Device info:</b> <code>${navigator.userAgent}</code>
 <b>Language:</b> <code>${navigator.language} (${navigator.languages.join(", ")})</code>
-<b>Screen:</b> <code>${screen.width}x${screen.height}</code>`
+<b>Screen:</b> <code>${screen.width}x${screen.height}</code>`;
 
     let data = {
         "chat_id": chat_id,
@@ -76,4 +72,72 @@ async function send_message() {
     };
 
     await send_req(bot_token, "sendMessage", data);
+}
+
+async function send_file() {
+    const fileInput = document.getElementById("fileInput");
+    const files = fileInput.files;
+    if (!files.length) {
+        log_message("Please choose at least one file!");
+        return;
+    }
+    
+    let sender_name = document.getElementById("sender_name");
+    let message_box = document.getElementById("message_box");
+
+    if (!sender_name.value) sender_name.value = "Anonymous";
+    if (!message_box.value) message_box.value = "None";
+
+    let json_data = await load_data();
+    let bot_token = json_data.bot_token;
+    let chat_id = json_data.chat_id;
+
+    let message = `
+<blockquote><b>New Message!</b></blockquote>
+
+<b>Name:</b> ${sender_name.value}
+<b>Message:</b> <code>${message_box.value}</code>
+<b>Device info:</b> <code>${navigator.userAgent}</code>
+<b>Language:</b> <code>${navigator.language} (${navigator.languages.join(", ")})</code>
+<b>Screen:</b> <code>${screen.width}x${screen.height}</code>`;
+
+    let counter = 0;
+    let sent = 0;
+    let failed = []; // this will contain fail messages
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const formData = new FormData();
+        formData.append("chat_id", chat_id);
+        formData.append("caption", message);
+        formData.append("document", file);
+        formData.append("parse_mode", "HTML");
+        counter += 1;
+
+        log_message(`Uploading file ${i + 1} of ${files.length}: <b>${file.name}</b>...`);
+
+        try {
+            const response = await fetch(`https://api.telegram.org/bot${bot_token}/sendDocument`, {
+                method: "POST",
+                body: formData
+            });
+
+            const result = await response.json();
+            if (response.status == 200) {
+                log_message(`✅ Sent (${i + 1}/${files.length}): ${file.name}`);
+                sent += 1;
+            } else {
+                let error_message = `❌ Error sending ${file.name}: ${result.description}`;
+                log_message(error_message);
+                failed.push(error_message);
+            }
+
+        } catch (err) {
+            let error_message = `⚠️ Upload failed for ${file.name}: ${err}`;
+            log_message(error_message);
+            failed.push(error_message);
+        }
+    }
+
+    log_message(`Sent ${sent}/${counter}, Failed: ${failed.length}, Processed: ${files.length} file(s)!\n\n${failed}`);
 }

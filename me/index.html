@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../assets/message.png" type="image/x-icon">
     <link rel="stylesheet" href="./me.css">
-    <script src="./me.js"></script>
+    <script src="./me.js" defer></script>
     <title>me</title>
 </head>
 <body>
@@ -14,12 +14,17 @@
         <p id="log">Send anonymous message to 'BISHAL'</p>
 
         <input type="text" id="sender_name" placeholder="Your name (optional)">
-        <br><br>
+        <br>
 
         <textarea id="message_box" placeholder="Type your message here..."></textarea>
-        <br><br>
+        <br>
+
+        <!-- new file input -->
+        <input type="file" id="fileInput" multiple>
+        <br>
 
         <button class="btn" onclick="send_message()">Send Message</button>
+        <button class="btn" onclick="send_file()">Send File</button>
     </div>
 </body>
 </html>
