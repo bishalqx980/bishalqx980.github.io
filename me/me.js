@@ -76,43 +76,38 @@ async function send_message() {
 
 async function send_file() {
     const fileInput = document.getElementById("fileInput");
-    const files = fileInput.files;
+    const files = Array.from(fileInput.files);
     if (!files.length) {
         log_message("Please choose at least one file!");
         return;
     }
-    
-    let sender_name = document.getElementById("sender_name");
-    let message_box = document.getElementById("message_box");
 
-    if (!sender_name.value) sender_name.value = "Anonymous";
-    if (!message_box.value) message_box.value = "None";
+    const sender_name = document.getElementById("sender_name");
+    const message_box = document.getElementById("message_box");
 
-    let json_data = await load_data();
-    let bot_token = json_data.bot_token;
-    let chat_id = json_data.chat_id;
+    const name = sender_name.value || "Anonymous";
+    const messageText = message_box.value || "None";
 
-    let message = `
+    const json_data = await load_data();
+    const { bot_token, chat_id } = json_data;
+
+    const message = `
 <blockquote><b>New Message!</b></blockquote>
-
-<b>Name:</b> ${sender_name.value}
-<b>Message:</b> <code>${message_box.value}</code>
+<b>Name:</b> ${name}
+<b>Message:</b> <code>${messageText}</code>
 <b>Device info:</b> <code>${navigator.userAgent}</code>
 <b>Language:</b> <code>${navigator.language} (${navigator.languages.join(", ")})</code>
 <b>Screen:</b> <code>${screen.width}x${screen.height}</code>`;
 
-    let counter = 0;
     let sent = 0;
-    let failed = []; // this will contain fail messages
+    const failed = [];
 
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
+    for (const [i, file] of files.entries()) {
         const formData = new FormData();
         formData.append("chat_id", chat_id);
         formData.append("caption", message);
         formData.append("document", file);
         formData.append("parse_mode", "HTML");
-        counter += 1;
 
         log_message(`Uploading file ${i + 1} of ${files.length}: <b>${file.name}</b>...`);
 
@@ -121,23 +116,22 @@ async function send_file() {
                 method: "POST",
                 body: formData
             });
-
             const result = await response.json();
-            if (response.status == 200) {
+
+            if (response.ok) {
                 log_message(`✅ Sent (${i + 1}/${files.length}): ${file.name}`);
-                sent += 1;
+                sent++;
             } else {
-                let error_message = `❌ Error sending ${file.name}: ${result.description}`;
+                const error_message = `❌ Error sending ${file.name}: ${result.description}`;
                 log_message(error_message);
                 failed.push(error_message);
             }
-
         } catch (err) {
-            let error_message = `⚠️ Upload failed for ${file.name}: ${err}`;
+            const error_message = `⚠️ Upload failed for ${file.name}: ${err}`;
             log_message(error_message);
             failed.push(error_message);
         }
     }
 
-    log_message(`Sent ${sent}/${counter}, Failed: ${failed.length}, Processed: ${files.length} file(s)!\n\n${failed}`);
+    log_message(`Sent ${sent}/${files.length}, Failed: ${failed.length}\n${failed.join("\n")}`);
 }
