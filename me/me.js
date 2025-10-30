@@ -1,3 +1,20 @@
+document.addEventListener("DOMContentLoaded", async function() {
+    const initial_log = document.getElementById("initial_log");
+    const container = document.getElementById("container_to_display");
+
+    let json_data = await load_data();
+    let bot_token = json_data.bot_token;
+
+    const res = await send_req(bot_token, "getMe", {}, initial_log);
+    if (res) {
+        initial_log.style.display = "none";
+        container.style.display = "";
+    } else {
+        initial_log.innerHTML = "Can't contact to Telegram API, please check your internet connection & try again!";
+    }
+});
+
+
 function log_message(message) {
     let log = document.getElementById("log");
     log.innerHTML = message;
@@ -18,9 +35,15 @@ async function load_data() {
     }
 }
 
-async function send_req(bot_token, method, data) {
-    log_message("Sending...");
+async function send_req(bot_token, method, data, log = null) {
     const api_url = `https://api.telegram.org/bot${bot_token}/${method}`;
+
+    if (log) {
+        log.innerHTML = "Please wait...";
+    } else {
+        log_message("Sending Request...");
+    }
+    
     try {
         let response = await fetch(api_url, {
             method: "POST",
@@ -31,13 +54,26 @@ async function send_req(bot_token, method, data) {
         let result = await response.json();
 
         if (response.status == 200) {
-            log_message("✅ Sent successfully!");
+            if (log) {
+                log.innerHTML = "✅ Request successful !!";
+            } else {
+                log_message("✅ Request successful !!");
+            }
+
             return result;
         } else {
-            log_message(`⚠️ Error (${response.status}): ${result.description}`);
+            if (log) {
+                log.innerHTML = `⚠️ Error (${response.status}): ${result.description}`;
+            } else {
+                log_message(`⚠️ Error (${response.status}): ${result.description}`);
+            }
         }
     } catch (error) {
-        log_message(`⚠️ Error ${error}`);
+        if (log) {
+            log.innerHTML = `⚠️ Error ${error}`;
+        } else {
+            log_message(`⚠️ Error ${error}`);
+        }
     }
 }
 
@@ -45,7 +81,7 @@ async function send_message() {
     let sender_name = document.getElementById("sender_name");
     let message_box = document.getElementById("message_box");
 
-    if (!sender_name.value) sender_name.value = "Anonymous";
+    if (!sender_name.value) sender_name.value = "Me";
     if (!message_box.value) {
         message_box.focus();
         log_message("Message can't be empty!");
@@ -85,7 +121,7 @@ async function send_file() {
     const sender_name = document.getElementById("sender_name");
     const message_box = document.getElementById("message_box");
 
-    const name = sender_name.value || "Anonymous";
+    const name = sender_name.value || "Me";
     const messageText = message_box.value || "None";
 
     const json_data = await load_data();

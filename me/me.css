@@ -13,6 +13,14 @@ body {
     box-sizing: border-box;
 }
 
+#initial_log {
+    position: absolute;
+    text-align: start;
+    top: 10px;
+    left: 10px;
+    margin: 0;
+}
+
 .container {
     width: 90%;
     max-width: 600px;
