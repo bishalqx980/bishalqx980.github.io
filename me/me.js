@@ -2,48 +2,69 @@ document.addEventListener("DOMContentLoaded", async function() {
     const initial_log = document.getElementById("initial_log");
     const container = document.getElementById("container_to_display");
 
-    let json_data = await load_data();
-    let bot_token = json_data.bot_token;
+    // Getting bot_token from json file
+    const json_data = await load_data();
+    const bot_token = json_data.bot_token;
+    const ping_url = `https://api.telegram.org/bot${bot_token}/getMe`;
 
-    const res = await send_req(bot_token, "getMe", {}, initial_log);
-    if (res) {
-        initial_log.style.display = "none";
-        container.style.display = "";
-    } else {
-        initial_log.innerHTML = "Can't contact to Telegram API, please check your internet connection & try again!";
+    initial_log.innerText += "[+] Please wait...\n";
+    initial_log.innerText += "[+] Sending ping to Telegram API !!\n";
+    
+    try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 5000);
+
+        const ping_response = await fetch(ping_url, { signal: controller.signal });
+
+        const result = await ping_response.json();
+
+        clearTimeout(timeout);
+
+        if (ping_response.ok) {
+            // Show the container if ping is ok
+            initial_log.style.display = "none";
+            container.style.display = "";
+        } else {
+            initial_log.innerText += `[-] Error (${response.status}): ${result.description}\n`;
+        }
+    } catch (error) {
+        initial_log.innerText += `[-] Error ${error}\n`;
+        initial_log.innerText += `[!] Can't contact with Telegram API, please check your internet connection & try again!\n`;
     }
 });
 
-
 function log_message(message) {
-    let log = document.getElementById("log");
-    log.innerHTML = message;
+    document.getElementById("log").innerHTML = message;
 }
 
 async function load_data() {
-    const json_path = "https://gist.githubusercontent.com/bishalqx980/4a063168c8bfd6fd16a4b280d6e31728/raw/me.json";
-    try {
-        let response = await fetch(json_path);
-        if (response.ok) {
-            let data = await response.json();
-            return data;
-        } else {
-            log_message("⚠️ Error (" + response.status + ") loading JSON data!");
+    const cached_data = sessionStorage.getItem("data");
+
+    if (cached_data) {
+        return JSON.parse(cached_data);
+    } else {
+        const json_path = "https://gist.githubusercontent.com/bishalqx980/4a063168c8bfd6fd16a4b280d6e31728/raw/me.json";
+
+        try {
+            const response = await fetch(json_path);
+
+            if (response.ok) {
+                const data = await response.json();
+                sessionStorage.setItem("data", JSON.stringify(data));
+                return data;
+            } else {
+                log_message("⚠️ Error (" + response.status + ") loading JSON data!");
+            }
+        } catch (error) {
+            log_message(error);
         }
-    } catch (error) {
-        log_message(error);
     }
 }
 
-async function send_req(bot_token, method, data, log = null) {
+async function send_req(bot_token, method, data = {}) {
     const api_url = `https://api.telegram.org/bot${bot_token}/${method}`;
+    log_message("🔃 Sending Request...");
 
-    if (log) {
-        log.innerHTML = "Please wait...";
-    } else {
-        log_message("Sending Request...");
-    }
-    
     try {
         let response = await fetch(api_url, {
             method: "POST",
@@ -54,26 +75,13 @@ async function send_req(bot_token, method, data, log = null) {
         let result = await response.json();
 
         if (response.status == 200) {
-            if (log) {
-                log.innerHTML = "✅ Request successful !!";
-            } else {
-                log_message("✅ Request successful !!");
-            }
-
+            log_message("✅ Request successful !!");
             return result;
         } else {
-            if (log) {
-                log.innerHTML = `⚠️ Error (${response.status}): ${result.description}`;
-            } else {
-                log_message(`⚠️ Error (${response.status}): ${result.description}`);
-            }
+            log_message(`⚠️ Error (${response.status}): ${result.description}`);
         }
     } catch (error) {
-        if (log) {
-            log.innerHTML = `⚠️ Error ${error}`;
-        } else {
-            log_message(`⚠️ Error ${error}`);
-        }
+        log_message(`⚠️ Error ${error}`);
     }
 }
 
