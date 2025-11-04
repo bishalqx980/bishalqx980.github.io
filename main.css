@@ -1,11 +1,12 @@
 :root {
     --color-white: #ffffff;
-    --transparent-bg: rgba(255, 255, 255, 0.2);
+    --transparent-bg: rgba(255, 255, 255, 0.25);
+    --max-width: 1600px;
 }
 
 body {
     width: 100%;
-    max-width: 1920px;
+    max-width: var(--max-width);
     min-height: 100vh;
     margin: auto;
     background: linear-gradient(145deg, rgb(0, 0, 0), rgb(255, 77, 169));
@@ -22,40 +23,51 @@ hr {
 }
 
 .title {
-  background: linear-gradient(
-    90deg,
-    red,
-    orange,
-    yellow,
-    green,
-    cyan,
-    blue,
-    violet,
-    red
-  );
-  background-size: 400%;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: rainbowFlow 12s linear infinite;
+    display: inline-block;
+    background: linear-gradient(
+        90deg,
+        red,
+        orange,
+        yellow,
+        green,
+        cyan,
+        blue,
+        violet,
+        red,
+        orange,
+        yellow
+    );
+    background-size: 400%;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbowFlow 12s linear infinite;
 }
 
 @keyframes rainbowFlow {
-  0% {
-    background-position: 0%;
-  }
-  100% {
-    background-position: 100%;
-  }
+    0% {
+        background-position: 0%;
+    }
+    100% {
+        background-position: 100%;
+    }
 }
 
 .home-div {
-    background-color: var(--transparent-bg);
+    background-color: rgb(255, 255, 255, 0.05);
     width: 80%;
     margin: auto;
     text-align: start;
     padding: 5px;
-    border: 2px solid var(--transparent-bg);
-    border-radius: 5px;
+    border: 0px solid var(--transparent-bg);
+    border-radius: 100px;
+}
+
+.main-div {
+    background-color: rgb(255, 255, 255, 0.05);
+    width: 80%;
+    margin: auto;
+    padding: 5px;
+    border-radius: 10px;
 }
 
 .btn {
@@ -63,11 +75,11 @@ hr {
     max-width: 80%;
     margin: 2px;
     padding: 10px;
-    background: rgb(255, 255, 255, 0.25);
+    background: var(--transparent-bg);
     color: var(--color-white);
     font-size: 18px;
     border: none;
-    border-radius: 10px;
+    border-radius: 100px;
     cursor: pointer;
     transition: 300ms;
     /* alignments */
@@ -89,9 +101,8 @@ hr {
 }
 
 .btn:hover {
-    background-color: var(--color-white);
-    transform: translateY(3px);
     color: rgb(0, 0, 0);
+    box-shadow: inset 200px 0px 50px var(--color-white);
 }
 
 @keyframes fadeIn {
@@ -103,8 +114,8 @@ hr {
 
 .credit-div {
     width: 100%;
-    max-width: 1920px;
-    margin-top: 3%;
+    max-width: var(--max-width);
+    margin-top: 10px;
     position: absolute;
     color: var(--color-white);
     font-family: Georgia, 'Times New Roman', Times, serif;
