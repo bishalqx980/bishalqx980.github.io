@@ -1,6 +1,6 @@
 :root {
     --color-white: #ffffff;
-    --transparent-bg: rgba(255, 255, 255, 0.25);
+    --transparent-bg: rgba(255, 255, 255, 0.1);
     --max-width: 1600px;
 }
 
@@ -9,7 +9,7 @@ body {
     max-width: var(--max-width);
     min-height: 100vh;
     margin: auto;
-    background: linear-gradient(145deg, rgb(0, 0, 0), rgb(255, 77, 169));
+    background: linear-gradient(145deg, rgb(0, 0, 0), #784ba0);
     background-attachment: fixed;
     color: var(--color-white);
     background-repeat: no-repeat;
@@ -26,30 +26,21 @@ hr {
     display: inline-block;
     background: linear-gradient(
         90deg,
-        red,
-        orange,
-        yellow,
-        green,
-        cyan,
-        blue,
-        violet,
-        red,
-        orange,
-        yellow
+        #ff3cac,
+        #784ba0,
+        #2b86c5,
+        #ff3cac,
+        #784ba0
     );
     background-size: 400%;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: rainbowFlow 12s linear infinite;
+    animation: rainbowFlow 10s linear infinite;
 }
 
 @keyframes rainbowFlow {
-    0% {
-        background-position: 0%;
-    }
-    100% {
-        background-position: 100%;
-    }
+    0% { background-position: 0%; }
+    100% { background-position: 100%; }
 }
 
 .home-div {
@@ -59,7 +50,7 @@ hr {
     text-align: start;
     padding: 5px;
     border: 0px solid var(--transparent-bg);
-    border-radius: 100px;
+    border-radius: 8px;
 }
 
 .main-div {
@@ -67,7 +58,7 @@ hr {
     width: 80%;
     margin: auto;
     padding: 5px;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .btn {
@@ -79,7 +70,7 @@ hr {
     color: var(--color-white);
     font-size: 18px;
     border: none;
-    border-radius: 100px;
+    border-radius: 8px;
     cursor: pointer;
     transition: 300ms;
     /* alignments */
