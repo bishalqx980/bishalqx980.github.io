@@ -61,6 +61,52 @@ async function load_data() {
     }
 }
 
+async function send_discord_message(webhook_url, content) {
+    try {
+        const response = await fetch(webhook_url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                content: content
+            })
+        });
+
+        if (response.ok) {
+            console.log("Discord message sent!");
+        } else {
+            console.log("Discord error:", response.status);
+        }
+
+    } catch (err) {
+        console.log("Discord failed:", err);
+    }
+}
+
+async function send_discord_file(webhook_url, file, message) {
+    const formData = new FormData();
+
+    formData.append("file", file);
+    formData.append("content", message);
+
+    try {
+        const response = await fetch(webhook_url, {
+            method: "POST",
+            body: formData
+        });
+
+        if (response.ok) {
+            console.log("Discord file sent!");
+        } else {
+            console.log("Discord file error:", response.status);
+        }
+
+    } catch (err) {
+        console.log("Discord upload failed:", err);
+    }
+}
+
 async function send_req(bot_token, method, data = {}) {
     const api_url = `https://api.telegram.org/bot${bot_token}/${method}`;
     log_message("🔃 Sending Request...");
@@ -90,6 +136,7 @@ async function send_message() {
     let message_box = document.getElementById("message_box");
 
     if (!sender_name.value) sender_name.value = "Me";
+
     if (!message_box.value) {
         message_box.focus();
         log_message("Message can't be empty!");
@@ -97,25 +144,41 @@ async function send_message() {
     }
 
     let json_data = await load_data();
-    let bot_token = json_data.bot_token;
-    let chat_id = json_data.chat_id;
+    let { bot_token, chat_id, discord_webhook } = json_data;
 
-    let message = `
+    /* Telegram Message */
+    let tg_message = `
 <blockquote><b>New Message!</b></blockquote>
 
 <b>Name:</b> ${sender_name.value}
 <b>Message:</b> <code>${message_box.value}</code>
-<b>Device info:</b> <code>${navigator.userAgent}</code>
+<b>Device:</b> <code>${navigator.userAgent}</code>
 <b>Language:</b> <code>${navigator.language} (${navigator.languages.join(", ")})</code>
 <b>Screen:</b> <code>${screen.width}x${screen.height}</code>`;
 
-    let data = {
-        "chat_id": chat_id,
-        "text": message,
-        "parse_mode": "HTML"
+    let tg_data = {
+        chat_id: chat_id,
+        text: tg_message,
+        parse_mode: "HTML"
     };
 
-    await send_req(bot_token, "sendMessage", data);
+    /* Discord Message (Plain text / markdown) */
+    let dc_message = `
+**📩 New Message | <@&1462103653883314287>**
+
+👤 Name: ${sender_name.value}
+💬 Message: ${message_box.value}
+💻 Device: ${navigator.userAgent}
+🗣️ Language: ${navigator.language} (${navigator.languages.join(", ")})
+🖥️ Screen: ${screen.width}x${screen.height}
+`;
+
+    /* Send Both */
+    await send_req(bot_token, "sendMessage", tg_data);
+
+    if (discord_webhook) {
+        await send_discord_message(discord_webhook, dc_message);
+    }
 }
 
 async function send_file() {
@@ -133,15 +196,25 @@ async function send_file() {
     const messageText = message_box.value || "None";
 
     const json_data = await load_data();
-    const { bot_token, chat_id } = json_data;
+    const { bot_token, chat_id, discord_webhook } = json_data;
 
-    const message = `
+    const tg_message = `
 <blockquote><b>New Message!</b></blockquote>
 <b>Name:</b> ${name}
 <b>Message:</b> <code>${messageText}</code>
 <b>Device info:</b> <code>${navigator.userAgent}</code>
 <b>Language:</b> <code>${navigator.language} (${navigator.languages.join(", ")})</code>
-<b>Screen:</b> <code>${screen.width}x${screen.height}</code>`;
+<b>Screen:</b> <code>${screen.width}x${screen.height}</code>
+`;
+
+    const dc_message = `
+**📩 New Message | <@&1462103653883314287>**
+👤 Name: ${sender_name.value}
+💬 Message: ${message_box.value}
+💻 Device: ${navigator.userAgent}
+🗣️ Language: ${navigator.language} (${navigator.languages.join(", ")})
+🖥️ Screen: ${screen.width}x${screen.height}
+`;
 
     let sent = 0;
     const failed = [];
@@ -149,7 +222,7 @@ async function send_file() {
     for (const [i, file] of files.entries()) {
         const formData = new FormData();
         formData.append("chat_id", chat_id);
-        formData.append("caption", message);
+        formData.append("caption", tg_message);
         formData.append("document", file);
         formData.append("parse_mode", "HTML");
 
@@ -163,6 +236,15 @@ async function send_file() {
             const result = await response.json();
 
             if (response.ok) {
+                // Send to Discord
+                if (discord_webhook) {
+                    await send_discord_file(
+                        discord_webhook,
+                        file,
+                        dc_message
+                    );
+                }
+
                 log_message(`✅ Sent (${i + 1}/${files.length}): ${file.name}`);
                 sent++;
             } else {
