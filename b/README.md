@@ -1,1 +1,0 @@
-## Redirector of [bishalqx980](https://bishalqx980.github.io/bishalqx980/)
